@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: goscribbl-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./docker/Dockerfile
+    healthCheckPath: /health
+    plan: free
+    autoDeploy: true
