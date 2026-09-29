@@ -15,7 +15,7 @@ export default function RoomPage() {
   const roomIdParam = params.roomId as string;
   const isNew = roomIdParam === 'new';
 
-  const { playerName, roomId, phase, connected, isOwner } = useGameStore();
+  const { playerName, roomId, phase, connected } = useGameStore();
   const { sendMessage } = useWebSocket();
   const sentRef = useRef(false);
 
@@ -33,10 +33,8 @@ export default function RoomPage() {
 
     sentRef.current = true;
     if (isNew) {
-      console.log('[Room] Sending CREATE_ROOM for', playerName);
       sendMessage(EVENTS.CREATE_ROOM, { playerName });
     } else if (!roomId) {
-      console.log('[Room] Sending JOIN_ROOM for', roomIdParam);
       sendMessage(EVENTS.JOIN_ROOM, { roomId: roomIdParam, playerName });
     }
   }, [connected, playerName, isNew, roomIdParam, roomId, sendMessage]);

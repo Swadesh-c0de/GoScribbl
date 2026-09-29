@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import { useEffect } from 'react';
-import { Trophy, Crown, RotateCcw, Medal } from 'lucide-react';
+import { Trophy, Crown, RotateCcw } from 'lucide-react';
 
 export default function GameOver() {
   const { players, resetGame } = useGameStore();

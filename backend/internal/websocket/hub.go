@@ -5,7 +5,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/harshcodesdev/scrrblIX/pkg/constants"
+	"github.com/Swadesh-c0de/GoScribbl/pkg/constants"
 )
 
 type Hub struct {

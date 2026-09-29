@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Pencil, Check, Trophy, User } from 'lucide-react';
 
 export default function PlayerList() {
-  const { players, currentDrawerId, playerId } = useGameStore();
+  const { players, playerId } = useGameStore();
 
   // Sort players by score
   const sortedPlayers = [...players].sort((a, b) => b.score - a.score);

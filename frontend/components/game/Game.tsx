@@ -12,16 +12,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, MessageCircle, X } from 'lucide-react';
 
 export default function Game() {
-  const { phase, timeLeft, currentRound, totalRounds, wordHint, currentDrawerId, players, selectedWord, wordChoices, playerId } = useGameStore();
+  const { phase, timeLeft, currentRound, totalRounds, wordHint, currentDrawerId, players, selectedWord, playerId } = useGameStore();
   const [showMobileChat, setShowMobileChat] = useState(false);
 
   // Find current drawer name
   const currentDrawer = players.find(p => p.id === currentDrawerId);
   // Compute isDrawer directly to avoid stale closure issues
   const amIDrawer = playerId !== null && playerId === currentDrawerId;
-
-  // Debug logging
-  // console.log('[GAME] Render - phase:', phase, 'amIDrawer:', amIDrawer, 'playerId:', playerId, 'currentDrawerId:', currentDrawerId, 'wordChoices:', wordChoices);
 
   return (
     <div className="flex h-screen w-full p-4 gap-6 overflow-hidden">

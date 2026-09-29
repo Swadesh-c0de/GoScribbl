@@ -7,14 +7,14 @@ export const useWebSocket = () => {
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isConnectingRef = useRef(false);
+  const connectRef = useRef<() => void>(() => undefined);
   
   const {
+    connected,
     setConnected,
     setPlayers,
     setPhase,
     setRoomId,
-    setPlayerId,
-    setIsOwner,
     setCurrentRound,
     setTimeLeft,
     setWordHint,
@@ -33,20 +33,16 @@ export const useWebSocket = () => {
     if (socketRef.current?.readyState === WebSocket.CONNECTING) return;
 
     isConnectingRef.current = true;
-    console.log('Connecting to WebSocket:', WS_URL);
-    
     try {
       const ws = new WebSocket(WS_URL);
       socketRef.current = ws;
 
       ws.onopen = () => {
-        console.log('Connected to WebSocket');
         setConnected(true);
         isConnectingRef.current = false;
       };
 
       ws.onclose = (event) => {
-        console.log('Disconnected from WebSocket', event.code, event.reason);
         setConnected(false);
         isConnectingRef.current = false;
         socketRef.current = null;
@@ -54,15 +50,13 @@ export const useWebSocket = () => {
         // Only reconnect if it wasn't a clean close
         if (event.code !== 1000) {
           reconnectTimeoutRef.current = setTimeout(() => {
-            console.log('Attempting to reconnect...');
-            connect();
+            connectRef.current();
           }, 3000);
         }
       };
 
       ws.onerror = () => {
         // Error details are not available in browser for security reasons
-        console.log('WebSocket connection error');
         isConnectingRef.current = false;
       };
 
@@ -79,8 +73,6 @@ export const useWebSocket = () => {
         try {
           const message = JSON.parse(event.data);
           const { type, data } = message;
-
-          console.log('Received message:', type, data);
 
           switch (type) {
             case EVENTS.ROOM_INFO:
@@ -161,7 +153,7 @@ export const useWebSocket = () => {
               break;
               
             default:
-              console.log('Unhandled message type:', type);
+              break;
           }
         } catch (error) {
           console.error('Error parsing message:', error);
@@ -172,8 +164,8 @@ export const useWebSocket = () => {
       isConnectingRef.current = false;
     }
   }, [
-    setConnected, setPlayers, setPhase, setRoomId, 
-    setPlayerId, setIsOwner, setCurrentRound, setTimeLeft, setWordHint, 
+    setConnected, setPlayers, setPhase, setRoomId,
+    setCurrentRound, setTimeLeft, setWordHint,
     setWordChoices, setCurrentDrawerId, addMessage
   ]);
 
@@ -203,11 +195,12 @@ export const useWebSocket = () => {
   }, []);
 
   useEffect(() => {
+    connectRef.current = connect;
     connect();
     return () => {
       disconnect();
     };
   }, [connect, disconnect]);
 
-  return { sendMessage, sendBinary, connected: socketRef.current?.readyState === WebSocket.OPEN };
+  return { sendMessage, sendBinary, connected };
 };

@@ -14,10 +14,10 @@ type GameState struct {
 	WordHint      string
 	TimeLeft      int
 	RoundStarted  bool
-	
+
 	// Track who has guessed correctly this round
 	GuessedPlayers map[string]bool
-	
+
 	// Timer control
 	timerStop chan struct{}
 	mu        sync.Mutex
@@ -35,7 +35,7 @@ func NewGameState(totalRounds int) *GameState {
 func (gs *GameState) StartRound(drawerID, word string, duration int) {
 	gs.mu.Lock()
 	defer gs.mu.Unlock()
-	
+
 	gs.CurrentRound++
 	gs.CurrentDrawer = drawerID
 	gs.Word = word
@@ -49,11 +49,11 @@ func (gs *GameState) StartRound(drawerID, word string, duration int) {
 func (gs *GameState) EndRound() {
 	gs.mu.Lock()
 	defer gs.mu.Unlock()
-	
+
 	gs.RoundStarted = false
 	gs.Word = ""
 	gs.WordHint = ""
-	
+
 	if gs.timerStop != nil {
 		close(gs.timerStop)
 		gs.timerStop = nil
@@ -100,12 +100,12 @@ func (gs *GameState) GetTimerStop() chan struct{} {
 func (gs *GameState) StartTimer(duration int, onTick func(int), onEnd func()) {
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
-	
+
 	stopChan := gs.GetTimerStop()
 	if stopChan == nil {
 		return
 	}
-	
+
 	for {
 		select {
 		case <-stopChan:

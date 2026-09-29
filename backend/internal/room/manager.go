@@ -7,10 +7,10 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/Swadesh-c0de/GoScribbl/internal/game"
+	"github.com/Swadesh-c0de/GoScribbl/internal/websocket"
+	"github.com/Swadesh-c0de/GoScribbl/pkg/constants"
 	"github.com/google/uuid"
-	"github.com/harshcodesdev/scrrblIX/internal/game"
-	"github.com/harshcodesdev/scrrblIX/internal/websocket"
-	"github.com/harshcodesdev/scrrblIX/pkg/constants"
 )
 
 type Manager struct {

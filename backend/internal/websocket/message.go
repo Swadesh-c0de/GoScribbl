@@ -27,7 +27,7 @@ type ChatData struct {
 }
 
 type RoomInfoData struct {
-	RoomID  string `json:"roomId"`
+	RoomID  string       `json:"roomId"`
 	Players []PlayerInfo `json:"players"`
 }
 
@@ -43,11 +43,11 @@ type ErrorData struct {
 }
 
 type RoundStartData struct {
-	Round       int    `json:"round"`
-	DrawerID    string `json:"drawerId"`
-	DrawerName  string `json:"drawerName"`
-	WordLength  int    `json:"wordLength"`
-	WordHint    string `json:"wordHint"`
+	Round      int    `json:"round"`
+	DrawerID   string `json:"drawerId"`
+	DrawerName string `json:"drawerName"`
+	WordLength int    `json:"wordLength"`
+	WordHint   string `json:"wordHint"`
 }
 
 type WordChoicesData struct {

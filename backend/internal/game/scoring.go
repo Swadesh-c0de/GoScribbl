@@ -1,6 +1,6 @@
 package game
 
-import "github.com/harshcodesdev/scrrblIX/pkg/constants"
+import "github.com/Swadesh-c0de/GoScribbl/pkg/constants"
 
 // CalculateGuessPoints calculates points for a correct guess
 // Earlier guesses get more points, based on time remaining

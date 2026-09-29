@@ -24,7 +24,7 @@ const (
 	EventTimerUpdate  = "timer_update"
 
 	// Drawing events (binary protocol)
-	EventDraw       = "draw"
+	EventDraw        = "draw"
 	EventClearCanvas = "clear_canvas"
 
 	// Guess/Chat events
@@ -42,9 +42,9 @@ const (
 
 // Message types for binary protocol
 const (
-	MsgTypeDraw       byte = 0x01
-	MsgTypeClear      byte = 0x02
-	MsgTypeDrawBatch  byte = 0x03
+	MsgTypeDraw      byte = 0x01
+	MsgTypeClear     byte = 0x02
+	MsgTypeDrawBatch byte = 0x03
 )
 
 // Game configuration

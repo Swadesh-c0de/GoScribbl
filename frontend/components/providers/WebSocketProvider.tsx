@@ -20,6 +20,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const mountedRef = useRef(true);
   const drawHandlerRef = useRef<BinaryDrawHandler | null>(null);
+  const connectRef = useRef<() => void>(() => undefined);
 
   const connect = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -28,33 +29,29 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
     if (socketRef.current?.readyState === WebSocket.CONNECTING) return;
 
     const {
-      setConnected, setPlayers, setPhase, setRoomId, setPlayerId,
+      setPlayers, setPhase, setRoomId, setPlayerId,
       setCurrentRound, setTimeLeft, setWordHint, setWordChoices,
       setCurrentDrawerId, addMessage,
     } = useGameStore.getState();
 
-    console.log('[WS] Connecting to', WS_URL);
     const ws = new WebSocket(WS_URL);
     ws.binaryType = 'arraybuffer';
     socketRef.current = ws;
 
     ws.onopen = () => {
       if (!mountedRef.current) { ws.close(1000); return; }
-      console.log('[WS] Connected');
       useGameStore.getState().setConnected(true);
     };
 
     ws.onclose = (event) => {
-      console.log('[WS] Closed', event.code, event.reason);
       useGameStore.getState().setConnected(false);
       socketRef.current = null;
       if (mountedRef.current && event.code !== 1000) {
-        reconnectTimeoutRef.current = setTimeout(connect, 3000);
+        reconnectTimeoutRef.current = setTimeout(() => connectRef.current(), 3000);
       }
     };
 
     ws.onerror = () => {
-      console.log('[WS] Error — connection failed');
     };
 
     ws.onmessage = (event) => {
@@ -67,8 +64,6 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
 
       try {
         const { type, data } = JSON.parse(event.data);
-        console.log('[WS] Received:', type, data);
-
         switch (type) {
           case EVENTS.CONNECT:
             if (data?.playerId) setPlayerId(data.playerId);
@@ -84,7 +79,6 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
             break;
 
           case EVENTS.NEXT_ROUND:
-            console.log('[WS] NEXT_ROUND received:', data);
             setCurrentDrawerId(data.drawerId);
             setCurrentRound(data.round);
             setWordHint('');
@@ -98,7 +92,6 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
             break;
 
           case EVENTS.ROUND_START:
-            console.log('[WS] ROUND_START received:', data);
             setPhase('drawing');
             setCurrentRound(data.round);
             if (data.drawerId) setCurrentDrawerId(data.drawerId);
@@ -114,14 +107,9 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
 
           case EVENTS.WORD_CHOICES: {
             const myId = useGameStore.getState().playerId;
-            console.log('[WS] WORD_CHOICES received, words:', data.words, 'myId:', myId);
             setCurrentDrawerId(myId);
             setWordChoices(data.words);
             setPhase('choosing');
-            setTimeout(() => {
-              const state = useGameStore.getState();
-              console.log('[WS] After WORD_CHOICES - phase:', state.phase, 'isDrawer:', state.isDrawer());
-            }, 100);
             break;
           }
 
@@ -167,7 +155,6 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
             break;
 
           case EVENTS.ROUND_END:
-            console.log('[WS] ROUND_END received');
             setPhase('roundEnd');
             setPlayers(data.scores);
             addMessage({
@@ -189,7 +176,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
             break;
 
           default:
-            console.log('[WS] Unhandled:', type);
+            break;
         }
       } catch (err) {
         console.error('[WS] Parse error:', err);
@@ -199,6 +186,7 @@ export function WebSocketProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     mountedRef.current = true;
+    connectRef.current = connect;
     connect();
     return () => {
       mountedRef.current = false;

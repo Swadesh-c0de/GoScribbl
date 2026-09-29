@@ -18,7 +18,7 @@ export default function CreateRoomPage() {
     // The actual CREATE_ROOM message is sent from the room page once WS is ready
     setIsOwner(true);
     router.push('/room/new');
-  }, []);
+  }, [playerName, router, setIsOwner]);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

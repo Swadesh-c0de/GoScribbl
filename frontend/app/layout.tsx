@@ -11,7 +11,7 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  title: "ScrrblIX",
+  title: "GoScribbl",
   description: "Draw, guess, and have fun!",
 };
 

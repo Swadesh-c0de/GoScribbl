@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import { useWebSocket } from '@/components/providers/WebSocketProvider';
 import Avatar from '@/components/shared/Avatar';
-import PlayerList from '@/components/game/PlayerList';
 import Chat from '@/components/game/Chat';
 import { motion } from 'framer-motion';
 import { EVENTS } from '@/lib/constants';
@@ -12,7 +11,7 @@ import { Copy, Check, Play } from 'lucide-react';
 
 export default function Lobby() {
   const [copied, setCopied] = useState(false);
-  const { roomId, players, isOwner, playerName } = useGameStore();
+  const { roomId, players, isOwner } = useGameStore();
   const { sendMessage } = useWebSocket();
 
   const canStartGame = isOwner && players.length >= 2;

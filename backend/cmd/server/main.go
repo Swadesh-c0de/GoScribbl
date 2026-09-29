@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/harshcodesdev/scrrblIX/internal/game"
-	"github.com/harshcodesdev/scrrblIX/internal/server"
+	"github.com/Swadesh-c0de/GoScribbl/internal/game"
+	"github.com/Swadesh-c0de/GoScribbl/internal/server"
 )
 
 func main() {

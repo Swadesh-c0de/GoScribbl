@@ -4,9 +4,9 @@ import (
 	"log"
 	"sync"
 
-	"github.com/harshcodesdev/scrrblIX/internal/models"
-	"github.com/harshcodesdev/scrrblIX/internal/websocket"
-	"github.com/harshcodesdev/scrrblIX/pkg/constants"
+	"github.com/Swadesh-c0de/GoScribbl/internal/models"
+	"github.com/Swadesh-c0de/GoScribbl/internal/websocket"
+	"github.com/Swadesh-c0de/GoScribbl/pkg/constants"
 )
 
 type Room struct {

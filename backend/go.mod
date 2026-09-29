@@ -1,4 +1,4 @@
-module github.com/harshcodesdev/scrrblIX
+module github.com/Swadesh-c0de/GoScribbl
 
 go 1.23.0
 

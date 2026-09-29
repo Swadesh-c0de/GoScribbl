@@ -42,12 +42,12 @@ func LoadWords(filepath string) error {
 	if err != nil {
 		return err
 	}
-	
+
 	var loadedWords []string
 	if err := json.Unmarshal(data, &loadedWords); err != nil {
 		return err
 	}
-	
+
 	if len(loadedWords) > 0 {
 		words = loadedWords
 	}
@@ -58,15 +58,15 @@ func GetRandomWords(count int) []string {
 	if count > len(words) {
 		count = len(words)
 	}
-	
+
 	// Shuffle and pick first N
 	shuffled := make([]string, len(words))
 	copy(shuffled, words)
-	
+
 	rand.Shuffle(len(shuffled), func(i, j int) {
 		shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
 	})
-	
+
 	return shuffled[:count]
 }
 

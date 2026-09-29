@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/Swadesh-c0de/GoScribbl/internal/room"
+	"github.com/Swadesh-c0de/GoScribbl/internal/websocket"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	ws "github.com/gorilla/websocket"
-	"github.com/harshcodesdev/scrrblIX/internal/room"
-	"github.com/harshcodesdev/scrrblIX/internal/websocket"
 )
 
 var upgrader = ws.Upgrader{

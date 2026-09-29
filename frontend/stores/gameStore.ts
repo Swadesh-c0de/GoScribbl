@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Player, RoomInfo, GamePhase, ChatMessage } from '../types';
+import { Player, GamePhase, ChatMessage } from '../types';
 
 interface GameState {
   // Connection
