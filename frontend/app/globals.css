@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pastel-purple-light: #E6E6FA;
+  --color-pastel-purple: #DCD0FF;
+  --color-pastel-purple-dark: #B19CD9;
+  --color-pastel-purple-deep: #7B68EE;
+  
+  --color-pastel-pink-light: #FFB6C1;
+  --color-pastel-pink: #FFB7B2;
+  --color-pastel-pink-dark: #FF69B4;
+  
+  --color-pastel-green-light: #98FB98;
+  --color-pastel-green: #E2F0CB;
+  --color-pastel-green-dark: #77DD77;
+  
+  --color-pastel-yellow-light: #FFFACD;
+  --color-pastel-yellow: #FFDAC1;
+  --color-pastel-yellow-dark: #FFD700;
+  
+  --color-pastel-blue-light: #E0FFFF;
+  --color-pastel-blue: #B5EAD7;
+  --color-pastel-blue-dark: #87CEEB;
+
+  --animate-bounce-slow: bounce 3s infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+:root {
+  --background: #E6E6FA;
+  --foreground: #4B0082;
+  --panel: rgba(255, 255, 255, 0.85);
+  --border: #B19CD9;
+}
+
+body {
+  color: var(--foreground);
+  background: linear-gradient(180deg, #FFE5EC 0%, #E0F7FA 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.pastel-panel {
+  background-color: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0px 0px #000000;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pastel-panel:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px #000000;
+}
+
+.pastel-button {
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pastel-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.pastel-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.pastel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.btn-primary {
+  background-color: #9F8FEF;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #8E7DDE;
+}
+
+.btn-secondary {
+  background-color: #FFB7B2;
+  color: white;
+}
+
+.btn-accent {
+  background-color: #B5EAD7;
+  color: #4B0082;
+}
+
+.pixel-shadow {
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff; 
+  border-left: 2px solid #000000;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #000000; 
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333; 
+}
